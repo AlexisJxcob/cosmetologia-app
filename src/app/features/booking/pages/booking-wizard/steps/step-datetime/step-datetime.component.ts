@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, output, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { BookingService } from '../../../../services/booking.service';
-import { AvailableSlotDto } from '../../../../../../core/models/dtos';
+import { BookingService } from '@features/booking/services/booking.service';
+import { AvailableSlotDto } from '@core/models/dtos';
 
 /**
  * Paso del wizard: "elegir día y hora". Sigue la regla de una sola decisión

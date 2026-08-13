@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
-import { StepDatetimeComponent } from './steps/step-datetime/step-datetime.component';
+import { StepDatetimeComponent } from '@features/booking/pages/booking-wizard/steps/step-datetime/step-datetime.component';
 // import { StepServiceSelectionComponent } from './steps/step-service-selection/...';
 // import { StepClientInfoComponent } from './steps/step-client-info/...';
 // import { StepConfirmationComponent } from './steps/step-confirmation/...';

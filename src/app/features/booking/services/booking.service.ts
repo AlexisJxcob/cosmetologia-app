@@ -6,7 +6,7 @@ import {
   CreateAppointmentRequest,
   AppointmentDto,
   ServiceDto,
-} from '../../core/models/dtos';
+} from '../../../core/models/dtos';
 
 /**
  * Estado del wizard de reserva completo. Vive en un servicio (no en el
