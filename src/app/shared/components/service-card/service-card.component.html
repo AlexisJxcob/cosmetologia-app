@@ -1,0 +1,44 @@
+<article
+  class="card-premium group flex cursor-pointer flex-col overflow-hidden !p-0"
+  (click)="onSelect()"
+  (keyup.enter)="onSelect()"
+  tabindex="0"
+  role="button"
+  [attr.aria-label]="'Reservar ' + service().nombre"
+>
+  <div class="relative aspect-[4/3] overflow-hidden bg-stone-100">
+    @if (service().imagenUrl) {
+      <img
+        [src]="service().imagenUrl"
+        [alt]="service().nombre"
+        class="h-full w-full object-cover transition-opacity duration-250 ease-luxe group-hover:opacity-90"
+        loading="lazy"
+      />
+    } @else {
+      <!-- Fallback: ícono lineal muy fino en vez de una imagen genérica -->
+      <div class="flex h-full w-full items-center justify-center">
+        <svg class="h-10 w-10 text-stone-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.75">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 7v5l3 2" />
+        </svg>
+      </div>
+    }
+  </div>
+
+  <div class="flex flex-1 flex-col gap-3 p-6">
+    <h3 class="font-display text-2xl font-medium leading-snug text-ink">
+      {{ service().nombre }}
+    </h3>
+
+    <p class="text-sm leading-relaxed text-ink-muted line-clamp-2">
+      {{ service().descripcionBreve }}
+    </p>
+
+    <div class="mt-auto flex items-center justify-between border-t border-stone-200 pt-4">
+      <span class="label-eyebrow">{{ service().duracionMinutos }} min</span>
+      <span class="font-display text-lg text-ink">
+        {{ service().precio | currency: 'USD' : 'symbol' : '1.0-0' }}
+      </span>
+    </div>
+  </div>
+</article>
