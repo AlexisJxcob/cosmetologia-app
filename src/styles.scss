@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Montserrat:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  // Valor por defecto del acento. ConfigService lo sobreescribe en runtime
+  // según el gabinete (tenant) autenticado — ver config.service.ts.
+  --color-accent: #5c6b54;
+  --color-accent-soft: #e4e9df;
+  --color-accent-ink: #3e4a38;
+}
+
+html,
+body {
+  background-color: theme('colors.ivory');
+  color: theme('colors.ink.DEFAULT');
+  font-family: theme('fontFamily.sans');
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@layer components {
+  /* ---------- Botones ---------- */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded bg-accent
+    px-6 py-3 font-sans text-sm font-medium text-ivory
+    transition-colors duration-250 ease-luxe
+    hover:bg-accent-ink
+    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent
+    disabled:opacity-40 disabled:pointer-events-none;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded border border-stone-300
+    bg-transparent px-6 py-3 font-sans text-sm font-medium text-ink
+    transition-colors duration-250 ease-luxe
+    hover:border-ink
+    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-1 font-sans text-sm text-ink-muted
+    transition-colors duration-250 ease-luxe hover:text-ink;
+  }
+
+  /* ---------- Tarjetas ---------- */
+  .card-premium {
+    @apply rounded-lg border border-stone-200 bg-white/60 p-6 shadow-soft
+    transition-shadow duration-250 ease-luxe hover:shadow-soft-lg;
+  }
+
+  /* ---------- Labels tipo "eyebrow" ---------- */
+  .label-eyebrow {
+    @apply font-sans text-xs font-medium uppercase tracking-widest text-ink-muted;
+  }
+
+  /* ---------- Badges de estado de turno ---------- */
+  .badge-state {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium tracking-wide;
+  }
+  .badge-state--pending {
+    @apply badge-state border border-stone-400 text-ink-muted;
+  }
+  .badge-state--confirmed {
+    @apply badge-state bg-accent-soft text-accent-ink;
+  }
+  .badge-state--completed {
+    @apply badge-state bg-stone-100 text-ink-muted;
+  }
+  .badge-state--cancelled {
+    @apply badge-state bg-[#F3E7E4] text-state-cancelled;
+  }
+
+  /* ---------- Input de formulario ---------- */
+  .input-premium {
+    @apply w-full rounded border border-stone-300 bg-white/50 px-4 py-3 font-sans text-base text-ink
+    transition-colors duration-250 ease-luxe
+    placeholder:text-ink-muted/60
+    focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent;
+  }
+
+  /* ---------- Hilo de progreso (firma visual del wizard) ---------- */
+  .progress-thread {
+    @apply relative h-[2px] w-full overflow-hidden rounded-full bg-stone-200;
+  }
+  .progress-thread__fill {
+    @apply absolute inset-y-0 left-0 rounded-full bg-accent transition-all duration-500 ease-luxe;
+  }
+}
