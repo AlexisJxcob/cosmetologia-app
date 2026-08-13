@@ -1,0 +1,57 @@
+<section class="mx-auto flex w-full max-w-xl flex-col gap-10 px-6 py-12">
+  <header class="flex flex-col gap-2 text-center">
+    <span class="label-eyebrow">Paso 2 de 4</span>
+    <h2 class="font-display text-3xl font-medium text-ink">Elegí día y horario</h2>
+  </header>
+
+  <!-- Selector de día: una fila de chips, sin calendario completo que distraiga -->
+  <div class="flex justify-center gap-2 overflow-x-auto pb-1">
+    @for (day of availableDays; track day.getTime()) {
+      <button
+        type="button"
+        class="flex min-w-[64px] flex-col items-center gap-1 rounded border px-3 py-3 transition-colors duration-250 ease-luxe"
+        [class]="
+          day.toDateString() === selectedDay().toDateString()
+            ? 'border-accent bg-accent-soft text-accent-ink'
+            : 'border-stone-200 text-ink-muted hover:border-stone-400'
+        "
+        (click)="selectDay(day)"
+      >
+        <span class="text-xs uppercase tracking-widest">{{ day | date: 'EEE' }}</span>
+        <span class="font-display text-lg">{{ day | date: 'd' }}</span>
+      </button>
+    }
+  </div>
+
+  <!-- Horarios del día elegido -->
+  <div class="flex flex-col gap-4">
+    @if (loading()) {
+      <p class="text-center text-sm text-ink-muted">Buscando horarios disponibles…</p>
+    } @else if (slots().length === 0) {
+      <p class="text-center text-sm text-ink-muted">
+        No hay horarios disponibles este día. Probá con otra fecha.
+      </p>
+    } @else {
+      <div class="grid grid-cols-3 gap-3 sm:grid-cols-4">
+        @for (slot of slots(); track slot.fechaHoraInicio) {
+          <button
+            type="button"
+            class="rounded border px-3 py-3 text-sm transition-colors duration-250 ease-luxe"
+            [class]="
+              selectedSlot()?.fechaHoraInicio === slot.fechaHoraInicio
+                ? 'border-accent bg-accent-soft text-accent-ink'
+                : 'border-stone-200 text-ink hover:border-stone-400'
+            "
+            (click)="selectSlot(slot)"
+          >
+            {{ slot.fechaHoraInicio | date: 'HH:mm' }}
+          </button>
+        }
+      </div>
+    }
+  </div>
+
+  <button type="button" class="btn-primary self-center" [disabled]="!canContinue()" (click)="continue()">
+    Continuar
+  </button>
+</section>
