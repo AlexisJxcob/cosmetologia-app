@@ -20,6 +20,7 @@ export class StepDatetimeComponent {
   private readonly bookingService = inject(BookingService);
 
   readonly next = output<void>();
+  readonly back = output<void>();
 
   readonly availableDays = this.buildNextDays(7);
   readonly selectedDay = signal<Date>(this.availableDays[0]);
@@ -60,6 +61,10 @@ export class StepDatetimeComponent {
     if (!slot) return;
     this.bookingService.setSlot(slot);
     this.next.emit();
+  }
+
+  goBack(): void {
+    this.back.emit();
   }
 
   private buildNextDays(count: number): Date[] {

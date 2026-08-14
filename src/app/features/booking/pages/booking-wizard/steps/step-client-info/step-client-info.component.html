@@ -1,0 +1,66 @@
+<section class="mx-auto flex w-full max-w-md flex-col gap-10 px-6 py-12">
+  <header class="flex flex-col gap-2 text-center">
+    <span class="label-eyebrow">Paso 3 de 4</span>
+    <h2 class="font-display text-3xl font-medium text-ink">Tus datos de contacto</h2>
+  </header>
+
+  <form [formGroup]="form" class="flex flex-col gap-5" (ngSubmit)="continue()">
+    <div class="flex flex-col gap-1.5">
+      <label class="label-eyebrow" for="nombreCompleto">Nombre completo</label>
+      <input
+        id="nombreCompleto"
+        type="text"
+        class="input-premium"
+        formControlName="nombreCompleto"
+        placeholder="Ej: María Fernández"
+      />
+      @if (nombreCompleto.invalid && nombreCompleto.touched) {
+        <span class="text-xs text-state-cancelled">Ingresá tu nombre completo.</span>
+      }
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label class="label-eyebrow" for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        class="input-premium"
+        formControlName="email"
+        placeholder="tu@email.com"
+      />
+      @if (email.invalid && email.touched) {
+        <span class="text-xs text-state-cancelled">Ingresá un email válido.</span>
+      }
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label class="label-eyebrow" for="telefono">Teléfono</label>
+      <input
+        id="telefono"
+        type="tel"
+        class="input-premium"
+        formControlName="telefono"
+        placeholder="+56 9 1234 5678"
+      />
+      @if (telefono.invalid && telefono.touched) {
+        <span class="text-xs text-state-cancelled">Ingresá un teléfono de contacto.</span>
+      }
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label class="label-eyebrow" for="notas">Notas (opcional)</label>
+      <textarea
+        id="notas"
+        rows="3"
+        class="input-premium resize-none"
+        formControlName="notas"
+        placeholder="Algo que debamos saber antes de tu turno"
+      ></textarea>
+    </div>
+
+    <div class="mt-4 flex items-center justify-center gap-4">
+      <button type="button" class="btn-secondary" (click)="goBack()">Volver</button>
+      <button type="submit" class="btn-primary">Continuar</button>
+    </div>
+  </form>
+</section>

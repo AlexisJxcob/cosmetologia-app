@@ -1,0 +1,71 @@
+<section class="mx-auto flex w-full max-w-md flex-col gap-10 px-6 py-12">
+  @if (!appointment()) {
+    <header class="flex flex-col gap-2 text-center">
+      <span class="label-eyebrow">Paso 4 de 4</span>
+      <h2 class="font-display text-3xl font-medium text-ink">Confirmá tu turno</h2>
+    </header>
+
+    <div class="card-premium flex flex-col gap-4">
+      @if (draft().service; as service) {
+        <div class="flex items-center justify-between border-b border-stone-200 pb-4">
+          <span class="label-eyebrow">Servicio</span>
+          <span class="font-display text-lg text-ink">{{ service.nombre }}</span>
+        </div>
+      }
+      @if (draft().slot; as slot) {
+        <div class="flex items-center justify-between border-b border-stone-200 pb-4">
+          <span class="label-eyebrow">Fecha y hora</span>
+          <span class="text-sm text-ink">{{ slot.fechaHoraInicio | date: "EEE d MMM, HH:mm" }}</span>
+        </div>
+      }
+      @if (draft().client; as client) {
+        <div class="flex items-center justify-between">
+          <span class="label-eyebrow">A nombre de</span>
+          <span class="text-sm text-ink">{{ client.nombreCompleto }}</span>
+        </div>
+      }
+    </div>
+
+    @if (errorMessage(); as error) {
+      <p class="text-center text-sm text-state-cancelled">{{ error }}</p>
+    }
+
+    <button type="button" class="btn-primary self-center" [disabled]="submitting()" (click)="confirm()">
+      {{ submitting() ? 'Confirmando…' : 'Confirmar reserva' }}
+    </button>
+  } @else {
+    <div class="flex flex-col items-center gap-6 text-center">
+      <div class="flex h-14 w-14 items-center justify-center rounded-full bg-accent-soft">
+        <svg class="h-6 w-6 text-accent-ink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <h2 class="font-display text-3xl font-medium text-ink">Tu turno está confirmado</h2>
+        <p class="text-sm text-ink-muted">Te esperamos en {{ nombreGabinete() }}.</p>
+      </div>
+
+      <div class="flex flex-col gap-3 sm:flex-row">
+        <a
+          *appFeatureFlag="'integracionGoogleCalendar'"
+          [href]="googleCalendarUrl()"
+          target="_blank"
+          rel="noopener"
+          class="btn-secondary"
+        >
+          Añadir a Google Calendar
+        </a>
+        <a
+          *appFeatureFlag="'integracionWhatsapp'"
+          [href]="whatsappUrl()"
+          target="_blank"
+          rel="noopener"
+          class="btn-secondary"
+        >
+          Escribir por WhatsApp
+        </a>
+      </div>
+    </div>
+  }
+</section>

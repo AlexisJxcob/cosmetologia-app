@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthService } from '@core/services/auth.service';
+import { AuthService } from '@core/services/auth.config';
 
 /**
  * Protege todo lo que cuelgue de /admin. Si no hay sesión restaurada

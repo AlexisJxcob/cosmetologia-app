@@ -1,0 +1,24 @@
+<section class="mx-auto flex w-full max-w-4xl flex-col gap-10 px-6 py-12">
+  <header class="flex flex-col gap-2 text-center">
+    <span class="label-eyebrow">Paso 1 de 4</span>
+    <h2 class="font-display text-3xl font-medium text-ink">Elegí tu tratamiento</h2>
+  </header>
+
+  @if (services.isLoading()) {
+    <p class="text-center text-sm text-ink-muted">Cargando servicios…</p>
+  } @else if (services.error()) {
+    <p class="text-center text-sm text-state-cancelled">
+      No pudimos cargar los servicios. Recargá la página en un momento.
+    </p>
+  } @else if (services.value(); as lista) {
+    @if (lista.length === 0) {
+      <p class="text-center text-sm text-ink-muted">No hay servicios disponibles por el momento.</p>
+    } @else {
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        @for (service of lista; track service.id) {
+          <app-service-card [service]="service" (select)="onSelect($event)" />
+        }
+      </div>
+    }
+  }
+</section>

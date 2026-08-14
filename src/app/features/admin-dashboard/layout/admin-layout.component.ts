@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, resource } from '@angular/c
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
-import { AuthService } from '@core/services/auth.service';
+import { AuthService } from '@core/services/auth.config';
 import { FeatureFlagDirective } from '@shared/directives/feature-flag.directive';
 import { DashboardKpiDto } from '@core/models/dtos';
 
