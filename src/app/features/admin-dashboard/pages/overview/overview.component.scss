@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+// ngx-charts trae sus propios estilos de eje/texto; los alineamos a la
+// tipografía y el gris neutro del sistema en vez del negro puro por defecto.
+:host ::ng-deep .ngx-charts text {
+  font-family: theme('fontFamily.sans');
+  fill: theme('colors.ink.muted');
+  font-size: 12px;
+}

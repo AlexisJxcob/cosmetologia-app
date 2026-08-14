@@ -1,0 +1,78 @@
+<section class="grid grid-cols-[280px_1fr] gap-8">
+  <div class="flex flex-col gap-1">
+    <span class="label-eyebrow mb-3 block">Clientas</span>
+
+    @if (clients.isLoading()) {
+      <p class="text-sm text-ink-muted">Cargando…</p>
+    } @else if (clients.error()) {
+      <p class="text-sm text-state-cancelled">No pudimos cargar el listado de clientas.</p>
+    } @else if (clients.value(); as lista) {
+      <div class="flex flex-col divide-y divide-stone-200 rounded-lg border border-stone-200">
+        @for (client of lista; track client.id) {
+          <button
+            type="button"
+            class="px-4 py-3 text-left text-sm transition-colors duration-250 ease-luxe"
+            [class]="
+              selectedClient()?.id === client.id
+                ? 'bg-accent-soft text-accent-ink'
+                : 'text-ink hover:bg-stone-50'
+            "
+            (click)="selectClient(client)"
+          >
+            {{ client.nombreCompleto }}
+          </button>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="card-premium">
+    @if (selectedClient(); as client) {
+      <h2 class="mb-1 font-display text-2xl text-ink">{{ client.nombreCompleto }}</h2>
+      <p class="mb-6 text-sm text-ink-muted">{{ client.email }} · {{ client.telefono }}</p>
+
+      <form [formGroup]="fichaForm" class="flex flex-col gap-5" (ngSubmit)="saveFicha()">
+        <div class="flex flex-col gap-1.5">
+          <label class="label-eyebrow" for="tipoDePiel">Tipo de piel</label>
+          <input id="tipoDePiel" type="text" class="input-premium" formControlName="tipoDePiel" />
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label class="label-eyebrow" for="alergias">Alergias</label>
+          <input id="alergias" type="text" class="input-premium" formControlName="alergias" />
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label class="label-eyebrow" for="historialTratamientos">Historial de tratamientos</label>
+          <textarea
+            id="historialTratamientos"
+            rows="3"
+            class="input-premium resize-none"
+            formControlName="historialTratamientos"
+          ></textarea>
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label class="label-eyebrow" for="notasPrivadas">Notas privadas del staff</label>
+          <textarea
+            id="notasPrivadas"
+            rows="3"
+            class="input-premium resize-none"
+            formControlName="notasPrivadas"
+          ></textarea>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <button type="submit" class="btn-primary self-start" [disabled]="saving()">
+            {{ saving() ? 'Guardando…' : 'Guardar ficha' }}
+          </button>
+          @if (saved()) {
+            <span class="text-xs text-accent-ink">Ficha actualizada.</span>
+          }
+        </div>
+      </form>
+    } @else {
+      <p class="text-sm text-ink-muted">Seleccioná una clienta para ver su ficha técnica.</p>
+    }
+  </div>
+</section>

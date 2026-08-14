@@ -1,0 +1,27 @@
+<section class="flex flex-col gap-8">
+  <header class="flex flex-col gap-1">
+    <span class="label-eyebrow">Resumen</span>
+    <h1 class="font-display text-3xl text-ink">Cómo viene la semana</h1>
+  </header>
+
+  <div class="card-premium">
+    <h2 class="mb-6 font-display text-lg text-ink">Ocupación por día</h2>
+
+    @if (occupancyByDay.isLoading()) {
+      <p class="text-sm text-ink-muted">Cargando datos…</p>
+    } @else if (occupancyByDay.error()) {
+      <p class="text-sm text-state-cancelled">No pudimos cargar la ocupación semanal.</p>
+    } @else if (occupancyByDay.value(); as data) {
+      <ngx-charts-bar-vertical
+        [results]="data"
+        [scheme]="colorScheme"
+        [xAxis]="true"
+        [yAxis]="true"
+        [gradient]="false"
+        [roundDomains]="true"
+        [roundEdges]="false"
+        [barPadding]="24"
+      />
+    }
+  </div>
+</section>

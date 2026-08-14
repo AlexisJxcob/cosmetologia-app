@@ -1,0 +1,85 @@
+<div class="flex min-h-screen bg-ivory">
+  <!-- Sidebar -->
+  <aside class="flex w-64 shrink-0 flex-col justify-between border-r border-stone-200 px-6 py-8">
+    <div class="flex flex-col gap-12">
+      <div class="flex flex-col gap-1">
+        <span class="font-display text-xl font-medium text-ink">Gabinete Luxe</span>
+        <span class="label-eyebrow">Panel de gestión</span>
+      </div>
+
+      <nav class="flex flex-col gap-1">
+        @for (item of navItems; track item.path) {
+          <a
+            [routerLink]="item.path"
+            routerLinkActive="border-accent bg-accent-soft text-accent-ink"
+            #rla="routerLinkActive"
+            class="flex items-center gap-3 rounded border border-transparent px-4 py-3 text-sm text-ink-muted transition-colors duration-250 ease-luxe hover:text-ink"
+            [class.text-ink]="!rla.isActive"
+          >
+            <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
+              <path [attr.d]="item.icon" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            {{ item.label }}
+          </a>
+        }
+
+        <!-- Ejemplo de feature flag: este link solo existe si el tenant lo activó -->
+        <a
+          *appFeatureFlag="'listaDeEspera'"
+          routerLink="/admin/waitlist"
+          class="flex items-center gap-3 rounded border border-transparent px-4 py-3 text-sm text-ink-muted transition-colors duration-250 ease-luxe hover:text-ink"
+        >
+          <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
+            <path d="M12 8v4l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Lista de espera
+        </a>
+      </nav>
+    </div>
+
+    <div class="flex flex-col gap-4 border-t border-stone-200 pt-6">
+      <div class="flex flex-col gap-0.5">
+        <span class="text-sm text-ink">{{ auth.currentUser()?.nombre }}</span>
+        <span class="text-xs text-ink-muted">{{ auth.currentUser()?.email }}</span>
+      </div>
+      <button type="button" class="btn-ghost self-start" (click)="logout()">Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <!-- Contenido principal -->
+  <div class="flex flex-1 flex-col">
+    <!-- Barra de KPIs: siempre visible, sin importar la sub-página del dashboard -->
+    <header class="grid grid-cols-2 gap-px border-b border-stone-200 bg-stone-200 lg:grid-cols-4">
+      @if (kpis.isLoading()) {
+        <div class="col-span-2 bg-ivory px-6 py-6 text-sm text-ink-muted lg:col-span-4">
+          Cargando indicadores…
+        </div>
+      } @else if (kpis.value(); as data) {
+        <div class="flex flex-col gap-1 bg-ivory px-6 py-6">
+          <span class="label-eyebrow">Turnos hoy</span>
+          <span class="font-display text-3xl text-ink">{{ data.turnosHoy }}</span>
+        </div>
+        <div class="flex flex-col gap-1 bg-ivory px-6 py-6">
+          <span class="label-eyebrow">Ingresos estimados (mes)</span>
+          <span class="font-display text-3xl text-ink">
+            {{ data.ingresosEstimadosMes | currency: 'USD' : 'symbol' : '1.0-0' }}
+          </span>
+        </div>
+        <div class="flex flex-col gap-1 bg-ivory px-6 py-6">
+          <span class="label-eyebrow">Ocupación semanal</span>
+          <span class="font-display text-3xl text-ink">
+            {{ data.tasaOcupacionSemana | number: '1.0-0' : 'en-US' }}%
+          </span>
+        </div>
+        <div class="flex flex-col gap-1 bg-ivory px-6 py-6">
+          <span class="label-eyebrow">Pendientes de confirmar</span>
+          <span class="font-display text-3xl text-ink">{{ data.turnosPendientesConfirmacion }}</span>
+        </div>
+      }
+    </header>
+
+    <main class="flex-1 overflow-y-auto p-8">
+      <router-outlet />
+    </main>
+  </div>
+</div>
