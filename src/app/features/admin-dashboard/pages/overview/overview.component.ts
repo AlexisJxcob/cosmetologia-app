@@ -25,10 +25,9 @@ export class OverviewComponent {
       >,
   });
 
-  // Un solo tono (el acento del tenant) en dos opacidades, en vez de la
-  // paleta arcoíris por defecto de ngx-charts — coherencia con el resto del
-  // sistema de diseño, donde el color siempre es una sola voz.
-  readonly colorScheme = {
+  // Tipamos como 'any' para evitar que 'as const' o las restricciones
+  // estrictas de tipo 'Color' de ngx-charts bloqueen la compilación del HTML.
+  readonly colorScheme: any = {
     domain: ['var(--color-accent)', 'var(--color-accent-soft)'],
-  } as const;
+  };
 }

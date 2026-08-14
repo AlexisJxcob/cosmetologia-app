@@ -5,8 +5,8 @@
 @tailwind utilities;
 
 :root {
-  // Valor por defecto del acento. ConfigService lo sobreescribe en runtime
-  // según el gabinete (tenant) autenticado — ver config.service.ts.
+  /* Valor por defecto del acento. ConfigService lo sobreescribe en runtime
+     según el gabinete (tenant) autenticado — ver config.service.ts. */
   --color-accent: #5c6b54;
   --color-accent-soft: #e4e9df;
   --color-accent-ink: #3e4a38;

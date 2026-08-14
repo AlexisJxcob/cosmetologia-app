@@ -71,6 +71,10 @@ export class BookingService {
     this._draft.update((d) => ({ ...d, client }));
   }
 
+  setNotas(notas: string): void {
+    this._draft.update((d) => ({ ...d, notas }));
+  }
+
   reset(): void {
     this._draft.set(EMPTY_DRAFT);
   }
